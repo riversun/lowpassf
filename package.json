@@ -1,0 +1,22 @@
+{
+  "name": "lowpassf",
+  "version": "0.0.1",
+  "description": "lowpass filter for javascript/node",
+  "main": "index.js",
+  "scripts": {
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riversun/lowpassf.git"
+  },
+  "keywords": [
+    "lowpass","linear waight"
+  ],
+  "author": "Tom Misawa <riversun.org@gmail.com> (https://github.com/riversun)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/riversun/lowpassf/issues"
+  },
+  "homepage": "https://github.com/riversun/lowpassf#readme"
+}
