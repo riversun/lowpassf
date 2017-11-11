@@ -1,54 +1,40 @@
-var LowpassFilter = (function () {
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var LowpassFilter = require('./lib/LowpassFilter');
 
-        /**
-         * Calculate Simple Moving Average
-         * @param params
-         * @constructor
-         */
+//export the module
+module.exports = LowpassFilter;
+
+var lp = new LowpassFilter();
+
+var data = [100, 100, 200, 200]
+var sampleRange = 20;
+
+
+lp.setSamplingRange(sampleRange);
+
+for (var i = 0; i < data.length; i++) {
+
+    lp.putValue(data[i]);
+    console.log(data[i] + " added. current filtered val is " + lp.getFilteredValue());
+
+}
+},{"./lib/LowpassFilter":2}],2:[function(require,module,exports){
+module.exports = (function () {
+
         function LowpassFilter(params) {
             this.mSamplingRange = 0;
             this.mSamplingBuffer = [];
             this.mCurrentFilterVal = 0;
             this.mCurrentDataNumber = 0;
             this.setSamplingRange(20);
-
-            //set linear weight moving average logic as default
-            this.calcLogic = this.LinearWeightAverage;
-            //this.calcLogic = this.SimpleAverage;
         }
 
-        LowpassFilter.prototype.setLogic = function (func) {
-            var _this = this;
-            _this.calcLogic = func;
-        };
-
-        LowpassFilter.prototype.LinearWeightAverage = function (numerator, range, n, samplingBuffer, denominator) {
-            numerator += (range - n) * samplingBuffer[n];
-            denominator += (range - n);
-            return {numerator: numerator, denominator: denominator};
-        };
-
-        LowpassFilter.prototype.SimpleAverage = function (numerator, range, n, samplingBuffer, denominator) {
-            numerator += samplingBuffer[n];
-            denominator = range;
-            return {numerator: numerator, denominator: denominator};
-        };
-
-        /**
-         * Set sampling range(DEFAULT is 20)
-         * @param range
-         */
         LowpassFilter.prototype.setSamplingRange = function (range) {
             var _this = this;
             _this.mSamplingRange = range;
             _this.mSamplingBuffer = new Array(_this.mSamplingRange);
         };
 
-        /**
-         * Returns total count
-         * @param range
-         * @returns {number}
-         */
         LowpassFilter.prototype.getTotalCount = function (range) {
             var _this = this;
             return _this.mCurrentDataNumber;
@@ -75,28 +61,16 @@ var LowpassFilter = (function () {
             _this.mCurrentFilterVal = _this.filter(val, _this.mSamplingBuffer);
         };
 
-        /**
-         * Get raw buffer
-         * @returns {Array}
-         */
         LowpassFilter.prototype.getSampingBuffer = function () {
             var _this = this;
             return _this.mSamplingBuffer;
         };
 
-        /**
-         * Get sampling range you specified
-         * @returns {number|*}
-         */
         LowpassFilter.prototype.getSamplingRange = function () {
             var _this = this;
             return _this.mSamplingRange;
         };
 
-        /**
-         * Fill out buffer by specified value
-         * @param val
-         */
         LowpassFilter.prototype.fillValue = function (val) {
             var _this = this;
             for (var i = 0; i < _this.mSamplingBuffer.length; i++) {
@@ -104,20 +78,10 @@ var LowpassFilter = (function () {
             }
         };
 
-
-        /**
-         * Do filter
-         * @param inputValue the latest(current) value
-         * @param samplingBuffer
-         * @returns {number}
-         */
         LowpassFilter.prototype.filter = function (inputValue, samplingBuffer) {
             var _this = this;
-
             _this.mCurrentDataNumber++;
-
             var range = samplingBuffer.length;
-
             if (_this.mCurrentDataNumber < range) {
                 range = _this.mCurrentDataNumber;
             }
@@ -136,10 +100,17 @@ var LowpassFilter = (function () {
 
             for (var n = 0; n < range; n++) {
 
-                var result = _this.calcLogic(numerator, range, n, samplingBuffer, denominator);
-                numerator = result.numerator;
-                denominator = result.denominator;
+                if (false) {
+                    // weight linearly
+                    numerator += (range - n) * samplingBuffer[n];
+                    denominator += (range - n);
+                }
 
+                if (true) {
+                    //weight simply
+                    numerator += samplingBuffer[n];
+                    denominator = range;// (range - n);
+                }
             }
 
             var currentOutputVal = numerator / denominator;
@@ -151,7 +122,4 @@ var LowpassFilter = (function () {
         return LowpassFilter;
     }()
 );
-
-if (typeof(module) !== "undefined") {
-    module.exports = LowpassFilter;
-}
+},{}]},{},[1]);

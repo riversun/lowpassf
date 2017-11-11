@@ -1,3 +1,46 @@
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var LowpassFilter = require('../../src/LowpassFilter');
+console.log = function (s) {
+    document.write(s + "<br>");
+}
+var filter = new LowpassFilter();
+
+//Set average logic from (  filter.LinearWeightAverage/ filter.SimpleAverage)
+filter.setLogic(filter.LinearWeightAverage);
+//filter.setLogic(filter.SimpleAverage);
+
+var data = [100, 100, 200, 200, 300, 300]
+var i;
+var sampleRange = 20;
+console.log("Prepare data...");
+for (i = 0; i < data.length; i++) {
+    console.log("data[" + i + "]=" + data[i]);
+}
+
+console.log("");
+console.log("Start filtering...");
+
+//Specify how many items to buffer
+filter.setSamplingRange(sampleRange);
+
+
+for (i = 0; i < data.length; i++) {
+
+    //put current value
+    filter.putValue(data[i]);
+
+    //get current "filtered" value
+    //Get the latest calculated moving average of the values putted so far
+    var filteredValue = filter.getFilteredValue();
+
+    var logStr = "data[" + i + "]=" + data[i]
+        + " added. current filtered val is "
+        + filteredValue;
+
+    console.log(logStr);
+
+}
+},{"../../src/LowpassFilter":2}],2:[function(require,module,exports){
 var LowpassFilter = (function () {
 
         /**
@@ -155,3 +198,4 @@ var LowpassFilter = (function () {
 if (typeof(module) !== "undefined") {
     module.exports = LowpassFilter;
 }
+},{}]},{},[1]);
