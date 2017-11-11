@@ -33,7 +33,7 @@ https://riversun.github.io/lowpassf/
 
 ## Run on node.js
 
-You can import library with npm.
+You can import [library](https://www.npmjs.com/package/lowpassf) with npm.
 
 **Install**
 
@@ -86,8 +86,25 @@ for (i = 0; i < data.length; i++) {
 
 **run on node.js**
 
-```
+```shell
 node app.js
+```
+
+```
+Prepare data...
+data[0]=100
+data[1]=100
+data[2]=200
+data[3]=200
+data[4]=300
+data[5]=300
+Start filtering...
+data[0]=100 added. current filtered val is 100
+data[1]=100 added. current filtered val is 100
+data[2]=200 added. current filtered val is 150
+data[3]=200 added. current filtered val is 170
+data[4]=300 added. current filtered val is 213.33333333333334
+data[5]=300 added. current filtered val is 238.0952380952381
 ```
 
 
