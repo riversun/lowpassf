@@ -1,6 +1,6 @@
 {
   "name": "lowpassf",
-  "version": "0.0.2",
+  "version": "0.5.0",
   "description": "lowpass filter for javascript/node",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "keywords": [
     "lowpass",
-    "linear waight"
+    "linear weight"
   ],
   "author": "Tom Misawa <riversun.org@gmail.com> (https://github.com/riversun)",
   "license": "MIT",

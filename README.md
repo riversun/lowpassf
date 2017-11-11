@@ -41,9 +41,9 @@ You can import library with npm.
 npm install --save-dev lowpassf
 ```
 
-**App logic**
+**app.js**
 
-```javascript:app.js
+```javascript
 var LowpassFilter = require('lowpassf');
 
 var filter = new LowpassFilter();
