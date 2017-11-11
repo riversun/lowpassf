@@ -1,0 +1,22 @@
+#for node
+npm-debug.log
+node_modules
+
+# for Eclipse
+.classpath
+.project
+.settings
+
+# for IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# for build
+target
+build
+dist
+
+# for  mac
+.DS_Store
